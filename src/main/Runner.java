@@ -17,6 +17,7 @@ public class Runner {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
         try {
             Fact f1 = new Fact("father", "a", "b", "c");
             Fact f2 = new Fact("father", "a", "b");
@@ -29,7 +30,6 @@ public class Runner {
             Query q2 = new Query("father", "a", "XX");
             Query q3 = new Query("father", "Example", "a");
             Query q4 = new Query("father", "XX", "XX", "XX", "XX");
-            
 
             Rule r1 = new Rule(new RulePart(null, new Query("grandfather", "A", "B")),
                     new RulePart(null, new Query("father", "A", "C")),
@@ -57,8 +57,7 @@ public class Runner {
         } catch (Exception exception) {
             System.out.println("Error: " + exception.getMessage());
         } finally {
-            Scanner in = new Scanner(System.in);
-            in.nextLine();
+            input.nextLine();
         }
     }
 
