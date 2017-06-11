@@ -57,7 +57,7 @@ public class Runner {
         } catch (Exception exception) {
             System.out.println("Error: " + exception.getMessage());
         } finally {
-            input.nextLine();
+//            input.nextLine();
         }
     }
 
