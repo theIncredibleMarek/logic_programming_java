@@ -5,6 +5,8 @@ import elements.Fact;
 import elements.Query;
 import elements.Rule;
 import elements.RulePart;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -19,17 +21,29 @@ public class Runner {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         try {
-            Fact f1 = new Fact("father", "a", "b", "c");
-            Fact f2 = new Fact("father", "a", "b");
-            Fact f3 = new Fact("father", "a", "a");
-            Fact f4 = new Fact("father", "z", "a");
-            Fact f5 = new Fact("father", "b", "c");
-            Fact f6 = new Fact("father", "b", "a");
+            List<Fact> facts = new ArrayList<Fact>() {
+                private static final long serialVersionUID = 1L;
+                {
+                    add(new Fact("father", "a", "b", "c"));
+                    add(new Fact("father", "a", "b", "d"));
+                    add(new Fact("father", "a", "b"));
+                    add(new Fact("father", "a", "a"));
+                    add(new Fact("father", "z", "a"));
+                    add(new Fact("father", "b", "c"));
+                    add(new Fact("father", "b", "a"));
+                }
+            };
 
-            Query q1 = new Query("father", "b");
-            Query q2 = new Query("father", "a", "XX");
-            Query q3 = new Query("father", "Example", "a");
-            Query q4 = new Query("father", "XX", "XX", "XX", "XX");
+            List<Query> queries = new ArrayList<Query>() {
+                private static final long serialVersionUID = 1L;
+                {
+                    add(new Query("father", "b"));
+                    add(new Query("father", "a", "XX"));
+                    add(new Query("father", "Example", "a"));
+                    add(new Query("father", "XX", "XX", "XX", "XX"));
+                    add(new Query("father", "XX", "XX", "XX"));
+                }
+            };
 
             Rule r1 = new Rule(new RulePart(null, new Query("grandfather", "A", "B")),
                     new RulePart(null, new Query("father", "A", "C")),
@@ -39,21 +53,15 @@ public class Runner {
             //the actual Prolog implementation
             SmartTransistor computer = new SmartTransistor();
 
-            computer.addFact(f1);
-            computer.addFact(f2);
-            computer.addFact(f3);
-            computer.addFact(f4);
-            computer.addFact(f5);
-            computer.addFact(f6);
+            facts.stream().forEach((fact) -> {
+                computer.addFact(fact);
+            });
 
-            String result = computer.query(q1);
-            System.out.println(result);
-            result = computer.query(q2);
-            System.out.println(result);
-            result = computer.query(q3);
-            System.out.println(result);
-            result = computer.query(q4);
-            System.out.println(result);
+            for (Query query : queries) {
+                String result = computer.query(query);
+                System.out.println(result);
+            }
+
         } catch (Exception exception) {
             System.out.println("Error: " + exception.getMessage());
         } finally {
